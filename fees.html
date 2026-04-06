@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fees Management</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    font-family:'Poppins', sans-serif;
+    background: linear-gradient(135deg,#1e3a8a,#000);
+    color:white;
+    padding:20px;
+}
+
+.container{
+    max-width:600px;
+    margin:auto;
+    background: rgba(255,255,255,0.08);
+    padding:25px;
+    border-radius:15px;
+    backdrop-filter: blur(10px);
+}
+
+h2{
+    color:#ffd166;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#ffd166;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.data{
+    margin-top:20px;
+    background: rgba(255,255,255,0.1);
+    padding:15px;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Student Fees</h2>
+
+<div class="data" id="info"></div>
+
+<input type="number" id="totalFees" placeholder="Enter Total Fees">
+<button onclick="setTotal()">Set Total Fees</button>
+
+<input type="number" id="payAmount" placeholder="Enter Paid Amount">
+<button onclick="payFees()">Add Payment</button>
+
+</div>
+
+<script>
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+// GET ID FROM URL
+let params = new URLSearchParams(window.location.search);
+let id = params.get("id");
+
+let student = students.find(s => s.id === id);
+
+// DEFAULT VALUES
+if(!student.totalFees){
+    student.totalFees = 0;
+    student.paid = 0;
+}
+
+// DISPLAY
+function render(){
+    document.getElementById("info").innerHTML = `
+        <p><b>Name:</b> ${student.name}</p>
+        <p><b>Total Fees:</b> ₹${student.totalFees}</p>
+        <p><b>Paid:</b> ₹${student.paid}</p>
+        <p><b>Remaining:</b> ₹${student.totalFees - student.paid}</p>
+    `;
+}
+
+// SET TOTAL FEES
+function setTotal(){
+    let total = document.getElementById("totalFees").value;
+    if(total){
+        student.totalFees = Number(total);
+        update();
+    }
+}
+
+// ADD PAYMENT
+function payFees(){
+    let amt = document.getElementById("payAmount").value;
+    if(amt){
+        student.paid += Number(amt);
+        update();
+    }
+}
+
+// SAVE
+function update(){
+    localStorage.setItem("students", JSON.stringify(students));
+    render();
+}
+
+render();
+</script>
+
+</body>
+</html>
