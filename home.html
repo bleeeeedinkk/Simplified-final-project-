@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simplified Education Hub</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background: #0b1c2c;
+    color: white;
+}
+
+/* NAVBAR */
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 50px;
+    background:#06121d;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+nav h2{
+    color:#ffd166;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:20px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav ul li a:hover{
+    color:#ffd166;
+}
+
+/* HERO SECTION */
+.hero{
+    height:100vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
+                url('/mnt/data/IMG_0249.png') no-repeat center center/cover;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+}
+
+.hero-content{
+    max-width:800px;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:10px;
+    color:#ffd166;
+}
+
+.hero h2{
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+.hero p{
+    font-size:18px;
+    margin-bottom:30px;
+}
+
+.btn{
+    padding:12px 25px;
+    background:#ffd166;
+    color:black;
+    border:none;
+    border-radius:5px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#ffb703;
+}
+
+/* SECTION */
+.section{
+    padding:60px 50px;
+    text-align:center;
+}
+
+.section h2{
+    margin-bottom:20px;
+    color:#ffd166;
+}
+
+/* COURSES */
+.courses{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+}
+
+.card{
+    background:#112d4e;
+    padding:20px;
+    border-radius:10px;
+    width:280px;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+/* FOOTER */
+footer{
+    background:#06121d;
+    padding:20px;
+    text-align:center;
+    font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <h2>Simplified Education Hub</h2>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#boards">Boards</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HERO / HOME -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Admission Open</h1>
+        <h2>For 2026–2027 Batch</h2>
+        <p>
+            Limited Seats Available • Book Now <br>
+            Get 20% OFF for First 50 Enrollments
+        </p>
+        <button class="btn">Apply Now</button>
+    </div>
+</section>
+
+<!-- COURSES -->
+<section class="section" id="courses">
+    <h2>Our Courses</h2>
+
+    <div class="courses">
+        <div class="card">
+            <h3>Vedic Maths</h3>
+            <p>Boost speed with powerful calculation techniques.</p>
+        </div>
+
+        <div class="card">
+            <h3>Abacus</h3>
+            <p>Mental arithmetic for faster and sharper thinking.</p>
+        </div>
+
+        <div class="card">
+            <h3>Drawing & Creative Arts</h3>
+            <p>Develop creativity and expression skills.</p>
+        </div>
+    </div>
+</section>
+
+<!-- BOARDS -->
+<section class="section" id="boards">
+    <h2>Boards We Cover</h2>
+    <p>CBSE | ICSE | GSEB</p>
+
+    <h3 style="margin-top:20px;">Classes</h3>
+    <p>5th – 10th | 11th – 12th (Science & Commerce)</p>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section">
+    <h2>Why Choose Us?</h2>
+    <p>
+        Homely Experience focused on personalized growth and a supportive learning environment.
+    </p>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+    <h2>Contact Us</h2>
+    <p>📞 800040XXXX</p>
+    <p>📍 Simplified Education Hub</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    © 2026 Simplified Education Hub | All Rights Reserved
+</footer>
+
+</body>
+</html>
