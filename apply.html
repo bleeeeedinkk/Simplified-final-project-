@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply Now - Simplified Education Hub</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        background: url('IMG_0248.jpeg') no-repeat center center/cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Dark overlay */
+    .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        top: 0;
+        left: 0;
+    }
+
+    /* Form container */
+    .form-container {
+        position: relative;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        z-index: 2;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #1e3a8a;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #1e3a8a;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #3b82f6;
+    }
+
+    .note {
+        font-size: 12px;
+        text-align: center;
+        margin-top: 10px;
+        color: gray;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="form-container">
+    <h2>Apply for Admission</h2>
+
+    <form>
+        <input type="text" placeholder="Student Name" required>
+        <input type="text" placeholder="Parent Name" required>
+        <input type="tel" placeholder="Mobile Number" required>
+
+        <select required>
+            <option value="">Select Class</option>
+            <option>5th - 8th</option>
+            <option>9th - 10th</option>
+            <option>11th - 12th Science</option>
+            <option>11th - 12th Commerce</option>
+        </select>
+
+        <select required>
+            <option value="">Select Board</option>
+            <option>GSEB</option>
+            <option>CBSE</option>
+            <option>ICSE</option>
+        </select>
+
+        <button type="submit">Confirm Seat</button>
+    </form>
+
+    <div class="note">
+        Limited seats available. Apply fast!
+    </div>
+</div>
+
+</body>
+</html>
