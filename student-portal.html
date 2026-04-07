@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Portal — SEH</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{min-height:100vh;color:white;background:linear-gradient(135deg,rgba(10,20,60,0.97),rgba(30,58,138,0.97)),url('IMG_0248.jpeg') no-repeat center/cover;display:flex;align-items:center;justify-content:center;}
+
+.container{width:100%;max-width:480px;padding:20px;}
+
+/* LOGIN SCREEN */
+#loginScreen{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);border-radius:20px;padding:40px;border:1px solid rgba(255,209,102,0.2);box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+#loginScreen h1{color:#ffd166;font-size:24px;margin-bottom:6px;}
+#loginScreen p{color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:30px;}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12px;color:#ffd166;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px;}
+.field input{width:100%;padding:12px 16px;border:1.5px solid rgba(255,255,255,0.2);border-radius:10px;background:rgba(255,255,255,0.07);color:white;font-family:'Poppins',sans-serif;font-size:14px;outline:none;transition:.3s;}
+.field input:focus{border-color:#ffd166;background:rgba(255,255,255,0.12);}
+.field input::placeholder{color:rgba(255,255,255,0.35);}
+.btn-login{width:100%;padding:13px;background:#ffd166;color:black;border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:.3s;margin-top:6px;}
+.btn-login:hover{background:white;}
+#loginErr{color:#ff7070;font-size:13px;margin-top:10px;text-align:center;min-height:20px;}
+
+/* DASHBOARD SCREEN */
+#dashScreen{display:none;width:100%;max-width:700px;}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+.top-bar h2{color:#ffd166;font-size:20px;}
+.btn-logout{background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.2);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Poppins',sans-serif;font-size:13px;transition:.3s;}
+.btn-logout:hover{background:rgba(255,80,80,0.4);}
+
+.profile-card{background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);border-radius:16px;padding:24px;margin-bottom:20px;border:1px solid rgba(255,209,102,0.15);display:flex;gap:20px;align-items:center;}
+.avatar{width:60px;height:60px;border-radius:50%;background:#ffd166;color:black;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;flex-shrink:0;}
+.profile-info h3{font-size:18px;font-weight:700;}
+.profile-info p{font-size:13px;color:rgba(255,255,255,0.6);margin-top:3px;}
+.profile-info .sid{font-family:monospace;font-size:13px;background:rgba(255,209,102,0.15);color:#ffd166;padding:3px 10px;border-radius:6px;display:inline-block;margin-top:6px;}
+
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.scard{background:rgba(255,255,255,0.07);border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.08);}
+.scard h4{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,0.5);margin-bottom:8px;}
+.scard .val{font-size:22px;font-weight:700;color:#ffd166;}
+.scard .sub{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;}
+
+.prog-section{background:rgba(255,255,255,0.07);border-radius:14px;padding:20px;margin-bottom:14px;border:1px solid rgba(255,255,255,0.08);}
+.prog-section h4{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:12px;}
+.prog-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;}
+.prog-track{background:rgba(255,255,255,0.1);border-radius:20px;height:12px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#ffd166,#ff9f43);transition:1s;}
+
+.remarks-box{background:rgba(255,209,102,0.08);border-radius:12px;padding:16px;border-left:3px solid #ffd166;margin-bottom:14px;}
+.remarks-box p{font-size:13px;color:rgba(255,255,255,0.7);}
+.remarks-box span{font-size:11px;color:#ffd166;font-weight:600;display:block;margin-bottom:6px;}
+
+.updated-tag{text-align:center;font-size:11px;color:rgba(255,255,255,0.3);margin-top:8px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="container" id="loginScreen">
+  <h1>Student Portal</h1>
+  <p>Login with your credentials provided by SEH Admin</p>
+  <div class="field">
+    <label>Username</label>
+    <input type="text" id="uname" placeholder="Enter your username">
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input type="password" id="pwd" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()">
+  </div>
+  <button class="btn-login" onclick="doLogin()">Login →</button>
+  <p id="loginErr"></p>
+</div>
+
+<!-- STUDENT DASHBOARD -->
+<div class="container" id="dashScreen">
+  <div class="top-bar">
+    <h2>My Dashboard</h2>
+    <button class="btn-logout" onclick="doLogout()">Logout</button>
+  </div>
+  <div id="dashContent"></div>
+</div>
+
+<script>
+function doLogin(){
+  let u=document.getElementById("uname").value.trim();
+  let p=document.getElementById("pwd").value;
+  let logins=JSON.parse(localStorage.getItem("studentLogins")||"[]");
+  let match=logins.find(l=>l.username===u&&l.password===p);
+  if(!match){
+    document.getElementById("loginErr").textContent="❌ Invalid username or password.";
+    return;
+  }
+  sessionStorage.setItem("currentStudent",match.studentId);
+  showDash(match.studentId);
+}
+
+function doLogout(){
+  sessionStorage.removeItem("currentStudent");
+  document.getElementById("dashScreen").style.display="none";
+  document.getElementById("loginScreen").style.display="block";
+  document.getElementById("uname").value="";
+  document.getElementById("pwd").value="";
+  document.getElementById("loginErr").textContent="";
+}
+
+function showDash(sid){
+  let students=JSON.parse(localStorage.getItem("students")||"[]");
+  let s=students.find(x=>x.id===sid);
+  if(!s){document.getElementById("loginErr").textContent="Student record not found.";return;}
+
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("dashScreen").style.display="block";
+
+  let fees=Number(s.fees||0);
+  let paid=Number(s.paid||0);
+  let prog=Number(s.progress||0);
+  let pending=fees-paid;
+  let initials=s.name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2);
+  let statusText=paid>=fees&&fees>0?"✅ Fully Paid":paid>0?"⚠️ Partially Paid":"❌ Pending";
+  let remarksHtml=s.remarks?`
+    <div class="remarks-box">
+      <span>📝 Admin Note</span>
+      <p>${s.remarks}</p>
+    </div>`:"";
+  let updatedHtml=s.lastUpdated?`<p class="updated-tag">Last updated by admin: ${s.lastUpdated}</p>`:"";
+
+  document.getElementById("dashContent").innerHTML=`
+    <div class="profile-card">
+      <div class="avatar">${initials}</div>
+      <div class="profile-info">
+        <h3>${s.name}</h3>
+        <p>${s.class} · ${s.course}</p>
+        <span class="sid">${s.id}</span>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="scard">
+        <h4>Total Fees</h4>
+        <div class="val">₹${fees.toLocaleString()}</div>
+      </div>
+      <div class="scard">
+        <h4>Amount Paid</h4>
+        <div class="val">₹${paid.toLocaleString()}</div>
+        <div class="sub">${statusText}</div>
+      </div>
+      <div class="scard">
+        <h4>Pending Amount</h4>
+        <div class="val" style="color:${pending>0?"#ff7070":"#50c878"};">₹${pending.toLocaleString()}</div>
+      </div>
+      <div class="scard">
+        <h4>Course Progress</h4>
+        <div class="val">${prog}%</div>
+      </div>
+    </div>
+    <div class="prog-section">
+      <h4>Course Progress</h4>
+      <div class="prog-label"><span>${s.course}</span><span>${prog}%</span></div>
+      <div class="prog-track"><div class="prog-fill" id="pf" style="width:0%"></div></div>
+    </div>
+    <div class="prog-section">
+      <h4>Fees Payment Progress</h4>
+      <div class="prog-label"><span>₹${paid.toLocaleString()} paid of ₹${fees.toLocaleString()}</span><span>${fees>0?Math.round(paid/fees*100):0}%</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:${fees>0?Math.round(paid/fees*100):0}%;background:linear-gradient(90deg,#50c878,#1da462);"></div></div>
+    </div>
+    ${remarksHtml}
+    ${updatedHtml}
+  `;
+
+  // animate progress bar
+  setTimeout(()=>{
+    let pf=document.getElementById("pf");
+    if(pf)pf.style.width=prog+"%";
+  },100);
+}
+
+// Auto-login if session active
+let sid=sessionStorage.getItem("currentStudent");
+if(sid) showDash(sid);
+</script>
+</body>
+</html>
