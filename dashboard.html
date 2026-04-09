@@ -1,0 +1,110 @@
+<script>
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+function generateID(){
+    return "SEH" + Math.floor(1000 + Math.random() * 9000);
+}
+
+function render(){
+    let table = document.getElementById("table");
+
+    table.innerHTML = `
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Course</th>
+        <th>Batch</th>
+        <th>Total</th>
+        <th>Paid</th>
+        <th>Score</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>`;
+
+    students.forEach((s,index)=>{
+        let status = s.paid == s.fees ? "Paid" : "Pending";
+        let statusClass = s.paid == s.fees ? "status-paid" : "status-pending";
+
+        table.innerHTML += `
+        <tr>
+            <td>${s.id}</td>
+            <td>${s.name}</td>
+            <td>${s.class}</td>
+            <td>${s.course}</td>
+            <td contenteditable="true" onblur="edit(${index},'batch',this.innerText)">${s.batch || "A"}</td>
+            <td>₹${s.fees}</td>
+            <td contenteditable="true" onblur="edit(${index},'paid',this.innerText)">₹${s.paid||0}</td>
+            <td contenteditable="true" onblur="edit(${index},'score',this.innerText)">${s.score||0}</td>
+            <td class="${statusClass}">${status}</td>
+            <td>
+                <button class="btn pay" onclick="markPaid(${index})">Pay</button>
+                <button class="btn delete" onclick="deleteStudent(${index})">Delete</button>
+            </td>
+        </tr>`;
+    });
+
+    localStorage.setItem("students", JSON.stringify(students));
+
+    document.getElementById("totalStudents").innerText = students.length;
+    document.getElementById("newAdmissions").innerText = students.length;
+}
+
+function addStudent(){
+    let name = document.getElementById("name").value;
+    let cls = document.getElementById("class").value;
+    let course = document.getElementById("course").value;
+    let fees = document.getElementById("fees").value;
+    let password = document.getElementById("password").value;
+
+    if(name && cls && course && fees && password){
+        let student = {
+            id: generateID(),
+            name,
+            class: cls,
+            course,
+            batch: "A",
+            fees: Number(fees),
+            password,
+            paid: 0,
+            score: 0,
+            videos: []
+        };
+
+        students.push(student);
+        localStorage.setItem("students", JSON.stringify(students));
+
+        alert("Student Created!\nID: " + student.id + "\nPassword: " + password);
+
+        document.querySelectorAll("input").forEach(i=>i.value="");
+        render();
+    } else {
+        alert("Fill all fields");
+    }
+}
+
+function edit(index, field, value){
+    if(field==="paid" || field==="score"){
+        value = value.replace("₹","").trim();
+        value = Number(value);
+    }
+    students[index][field] = value;
+    localStorage.setItem("students", JSON.stringify(students));
+}
+
+function markPaid(index){
+    students[index].paid = students[index].fees;
+    localStorage.setItem("students", JSON.stringify(students));
+    render();
+}
+
+function deleteStudent(index){
+    if(confirm("Delete student?")){
+        students.splice(index,1);
+        localStorage.setItem("students", JSON.stringify(students));
+        render();
+    }
+}
+
+render();
+</script>
